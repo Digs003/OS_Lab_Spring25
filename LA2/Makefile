@@ -19,5 +19,5 @@ run: parent child dummy
 	./parent 10
 
 clean:
-	rm -f parent child
+	rm -f child parent dummy childpid.txt dummycpid.txt
 

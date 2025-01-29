@@ -18,7 +18,7 @@ struct child_type{
   pid_t pid;
   int status;
 };
-struct child_type children[1024];
+struct child_type children[MAXCHILD];
 
 void handler_1(int sig){  
   //children[current_player].status=CATCH;
@@ -50,7 +50,7 @@ void handle_print(){
 int main(int argc,char* argv[]){
   srand(time(NULL));
   if(argc<2){
-    printf("Usage: %s <child program> <child program arguments>\n",argv[0]);
+    printf("Specify number of children\n");
     exit(1);
   }
   int n=atoi(argv[1]);
@@ -95,27 +95,9 @@ int main(int argc,char* argv[]){
     }
     current_player=(current_player+1)%n;
   }
-  int winner;
   for(int i=0;i<n;i++){
-    if(children[i].status==PLAYING){
-      winner=i+1;
-      break;
-    }
+    kill(children[i].pid,SIGINT);
   }
-
-  for(int i = 0; i < n; i++){
-    if(i==0)printf("------------+");
-    else printf("-----------+");
-  }
-  printf("\n");
-  for(int i=1;i<=n;i++){
-    if(i==1)printf("      %d      ", i);
-    else printf("     %d      ", i);
-  }
-  printf("\n");
-   
-
-  printf("\n+++ Child %d: Yay! I am the winner!\n",winner);
 
   exit(0);
 }

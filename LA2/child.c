@@ -66,7 +66,6 @@ void print_status(int sig){
     printf("\n|");
   }
 
-  //printf("Child%d: ",my_number);
   fflush(stdout);
   print();
   printf("|");
@@ -92,19 +91,34 @@ void print_status(int sig){
   }
 }
 
+void find_winner(){
+  if(my_status==PLAYING){
+    for(int i = 0; i < n; i++){
+      if(i==0)printf("------------+");
+      else printf("-----------+");
+    }
+    printf("\n");
+    for(int i=1;i<=n;i++){
+      if(i==1)printf("      %d      ", i);
+      else printf("     %d      ", i);
+    }
+    printf("\n");
+    printf("\n+++ Child %d: Yay! I am the winner!\n",my_number);
+  }
+  exit(0);
+}
+
 int main(){
   srand(time(NULL)+getpid());
   sleep(1);
   FILE *fp=fopen("childpid.txt","r");
   fscanf(fp,"%d",&n);
-  //printf("Total number of children: %d\n",n);
   pid_t mypid=getpid();
   start=1;
   
   for(int i=0;i<n;i++){
     pid_t pid;
     fscanf(fp,"%d",&pid);
-    //printf("pid=%d\n",pid);
     if(pid==mypid){
       //printf("I'm child%d with PID=%d\n",i+1,pid);
       my_number=i+1;
@@ -115,6 +129,7 @@ int main(){
   fclose(fp);
   signal(SIGUSR1,print_status);
   signal(SIGUSR2,catch_or_miss);
+  signal(SIGINT,find_winner);
   while(1)pause();
 
   exit(0);
