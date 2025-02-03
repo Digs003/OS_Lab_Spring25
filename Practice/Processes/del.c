@@ -1,29 +1,18 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<sys/types.h>
 #include<unistd.h>
+#include<sys/types.h>
+
 
 void f(int n){
-  if(n<2){
-    printf("Hi... n=%d from %d parent=%d\n",n,getpid(),getppid());
-    return;
-  }
-  else{
-
-    if(!fork()){
-      f(n-1);
-    }
-    if(!fork()){
-      f(n-2);
-    }
+  if(n<=0)return;
+  while(n--){
+    printf("PID=%d, PPID=%d, n=%d\n",getpid(),getppid(),n);
+    fflush(stdout);
+    if(!fork())f(n);
   }
 }
-
-int main ( int argc, char *argv[] )
-{
-int n;
-if (argc == 1) exit(1);
-n = atoi(argv[1]);
-f(n);
-exit(0);
+int main(){
+  f(1);
+  return 0;
 }
