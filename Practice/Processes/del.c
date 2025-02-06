@@ -13,6 +13,6 @@ void f(int n){
   }
 }
 int main(){
-  f(1);
+  f(2);
   return 0;
 }
