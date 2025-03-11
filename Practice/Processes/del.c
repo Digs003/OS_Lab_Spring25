@@ -5,14 +5,15 @@
 
 
 void f(int n){
-  if(n<=0)return;
-  while(n--){
-    printf("PID=%d, PPID=%d, n=%d\n",getpid(),getppid(),n);
-    fflush(stdout);
-    if(!fork())f(n);
+  if(n<2){
+    printf("Hi...pid=%d\n",getpid());
+   // exit(0);
+  }else{
+    if(!fork())f(n-1);
+    if(!fork())f(n-2);
   }
 }
 int main(){
-  f(2);
+  f(3);
   return 0;
 }

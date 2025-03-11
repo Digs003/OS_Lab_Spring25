@@ -21,6 +21,7 @@ void process_module(char* module){
     if(feof(fp)){
       break;
     }
+    //printf("%s\n",line);
     char* curr=line;
     sscanf(curr,"%s",curr_module);
     int len=strlen(curr_module);
