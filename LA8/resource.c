@@ -432,6 +432,9 @@ int main(){
     printf("\n");
     pthread_mutex_unlock(&pmtx);
   }
+    for (int i = 0; i < n; i++) {
+        pthread_join(threads[i], NULL);
+    }
 
   //Destroying all the barriers and mutexes
     pthread_barrier_destroy(&BOS);
