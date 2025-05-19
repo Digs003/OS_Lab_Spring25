@@ -273,7 +273,7 @@ void print_results() {
 }
 
 void read_input() {
-    FILE* fp = fopen("sample/search.txt", "r");
+    FILE* fp = fopen("search.txt", "r");
     if (fp == NULL) {
         printf("Error opening input file\n");
         exit(1);
